@@ -5,14 +5,16 @@ import { ApiRespondeModel } from '../../models/interface/roles';
 import { Client } from '../../models/class/client';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MybuttonComponent } from '../../reusableComponents/mybutton/mybutton.component';
 
 @Component({
   selector: 'app-client',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,MybuttonComponent],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'
 })
 export class ClientComponent implements OnInit{
+  currentTime:Date = new Date();
   clientobj :Client= new Client();
   clientList:Client[] = [];
   clientService = inject(ClientService);
@@ -33,7 +35,7 @@ export class ClientComponent implements OnInit{
     });
   }
 
-  onSaveClient(){
+  onSaveClient(data:string){
     //console.log(`Me puedes ver: ${this.clientobj}`);
     //debugger;
     this.clientService.addUpdate(this.clientobj).subscribe((res:ApiRespondeModel)=>{
@@ -63,7 +65,15 @@ export class ClientComponent implements OnInit{
   }
 
   onClean(){
-    //this.clientobj = ;
+    /*
+    this.clientobj = {
+      clientId : 0,
+      contactPersonName:"",
+      companyName:"",
+      address:"",
+      pincode:"",
+
+    };*/
   }
 
   ngOnInit(): void {

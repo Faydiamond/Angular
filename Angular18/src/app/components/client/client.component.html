@@ -8,7 +8,9 @@
 
   <div class="col-8 mt-3">
     <div class="card">
-      <div class="card-header bg-success">Client List</div>
+      <div class="card-header bg-success">
+        Client List {{ currentTime | date : "dd-MM-YYYY" }}
+      </div>
       <div class="card-body">
         <table class="table table-striped table-inverse table-responsive">
           <thead class="thead-inverse">
@@ -25,7 +27,7 @@
             @for(item of clientList; track $index ){
             <tr>
               <td>{{ item.clientId }}</td>
-              <td>{{ item.contactPersonName }}</td>
+              <td>{{ item.contactPersonName | uppercase }}</td>
               <td>{{ item.companyName }}</td>
               <td>{{ item.address }}</td>
               <td>{{ item.city }}</td>
@@ -80,108 +82,126 @@
     <div class="card">
       <div class="card-header bg-success">New Client</div>
       <div class="card-body">
-        <div class="row">
-          <div class="col-6">
-            <label for="">Person Name</label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="clientobj.contactPersonName"
-              minlength="5"
-              #PersonName="ngModel"
-              required
-            />
-            <div class="text-danger" *ngIf="PersonName.touched">
-              <div *ngIf="PersonName?.errors?.['minlength']">
-                <span>Min 5 charcaters</span>
-              </div>
-              <div *ngIf="PersonName?.errors?.['required']">
-                <span>It's required</span>
+        <form #form="ngForm">
+          <div class="row">
+            <div class="col-6">
+              <label for="">Person Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="contactPersonName"
+                [(ngModel)]="clientobj.contactPersonName"
+                minlength="5"
+                #PersonName="ngModel"
+                required
+              />
+              <div class="text-danger" *ngIf="PersonName.touched">
+                <div *ngIf="PersonName?.errors?.['minlength']">
+                  <span>Min 5 charcaters</span>
+                </div>
+                <div *ngIf="PersonName?.errors?.['required']">
+                  <span>It's required</span>
+                </div>
               </div>
             </div>
+            <div class="col-6">
+              <label for="">Company Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="companyName"
+                [(ngModel)]="clientobj.companyName"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">Address</label>
+              <textarea
+                [(ngModel)]="clientobj.address"
+                class="form-control"
+                name="address"
+              ></textarea>
+            </div>
+            <div class="col-6">
+              <label for="">City</label>
+              <input
+                type="text"
+                class="form-control"
+                name="city"
+                [(ngModel)]="clientobj.city"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">Pincode</label>
+              <input
+                type="text"
+                class="form-control"
+                name="pincode"
+                [(ngModel)]="clientobj.pincode"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">State</label>
+              <input
+                type="text"
+                class="form-control"
+                name="state"
+                [(ngModel)]="clientobj.state"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">Employee Strength</label>
+              <input
+                type="text"
+                [(ngModel)]="clientobj.employeeStrength"
+                class="form-control"
+                name="employeeStrength"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">gsto No.</label>
+              <input
+                type="text"
+                class="form-control"
+                name="gstNo"
+                [(ngModel)]="clientobj.gstNo"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">Contatc No. </label>
+              <input
+                type="text"
+                class="form-control"
+                name="contactNo"
+                [(ngModel)]="clientobj.contactNo"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">reg No. </label>
+              <input
+                type="text"
+                class="form-control"
+                name="regNo"
+                [(ngModel)]="clientobj.regNo"
+              />
+            </div>
           </div>
-          <div class="col-6">
-            <label for="">Company Name</label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="clientobj.companyName"
-            />
+          <div class="row mt-4">
+            <div class="col-6 text-center">
+              <button class="btn btn-secondary" (click)="onClean()">
+                Reset
+              </button>
+            </div>
+            <div class="col-6 text-center">
+              <app-mybutton
+                [btnClass]="'btn btn-success'"
+                [btnText]="
+                  clientobj.clientId != 0 ? 'Update Client' : 'Save Client'
+                "
+                (onBtnClicked)="onSaveClient($event)"
+              ></app-mybutton>
+            </div>
           </div>
-          <div class="col-6">
-            <label for="">Address</label>
-            <textarea
-              [(ngModel)]="clientobj.address"
-              class="form-control"
-            ></textarea>
-          </div>
-          <div class="col-6">
-            <label for="">City</label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="clientobj.city"
-            />
-          </div>
-          <div class="col-6">
-            <label for="">Pincode</label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="clientobj.pincode"
-            />
-          </div>
-          <div class="col-6">
-            <label for="">State</label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="clientobj.state"
-            />
-          </div>
-          <div class="col-6">
-            <label for="">Employee Strength</label>
-            <input
-              type="text"
-              [(ngModel)]="clientobj.employeeStrength"
-              class="form-control"
-            />
-          </div>
-          <div class="col-6">
-            <label for="">gsto No.</label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="clientobj.gstNo"
-            />
-          </div>
-          <div class="col-6">
-            <label for="">Contatc No. </label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="clientobj.contactNo"
-            />
-          </div>
-          <div class="col-6">
-            <label for="">reg No. </label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="clientobj.regNo"
-            />
-          </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col-6 text-center">
-            <button class="btn btn-secondary" (click)="onClean()">Reset</button>
-          </div>
-          <div class="col-6 text-center">
-            <button class="btn btn-success" (click)="onSaveClient()">
-              {{ clientobj.clientId != 0 ? "Update Client" : "Save Client" }}
-            </button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

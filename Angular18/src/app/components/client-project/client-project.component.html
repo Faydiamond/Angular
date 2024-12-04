@@ -1,0 +1,171 @@
+<div class="row">
+  @if(isLoader ){
+  <div class="col-8 text-center">
+    <div class="spinner-border text-dark"></div>
+  </div>
+
+  }@else {
+  <app-alert [alertType]="'danger'" [Message]="'Since from client'"></app-alert>
+  <div class="col-8 mt-3">
+    <div class="card">
+      <div class="card-header bg-success">Client List</div>
+      <div class="card-body">
+        <table class="table table-striped table-inverse table-responsive">
+          <thead class="thead-inverse">
+            <tr>
+              <th>Id</th>
+              <th>project Name</th>
+              <th>start Date</th>
+              <th>expected End Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(clientpro of projectList(); track $index){
+            <tr>
+              <td>{{ $index }}</td>
+              <td>{{ clientpro.projectName }}</td>
+              <td>{{ clientpro.startDate | date : "dd-MM-YYYY" }}</td>
+              <td>{{ clientpro.expectedEndDate | date : "dd-MM-YYYY" }}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  }
+  <div class="col-4">
+    <div class="card">
+      <div class="card-header bg-success">New Client</div>
+      <div class="card-body">
+        <form [formGroup]="projectForm">
+          <div class="row">
+            <div class="col-6">
+              <label for="">Person Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="projectName"
+              />
+              <div class="text-danger">
+                @if(projectForm.controls['projectName'].touched){
+                @if(projectForm.controls['projectName'].errors?.['required']){
+                <span>This is required</span>
+                }
+                @if(projectForm.controls['projectName'].errors?.['minlength']){
+                <span>Min 5 characters</span>
+                } }
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="">Start Date</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="startDate"
+              />
+            </div>
+
+            <div class="col-6">
+              <label for="">expected End Date</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="expectedEndDate"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">completed Date</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="completedDate"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">contact Person</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="contactPerson"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">contact Person Contact No.</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="contactPersonContactNo"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">total EmpWorking</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="totalEmpWorking"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">project Cost</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="projectCost"
+              />
+            </div>
+            <div class="col-6">
+              <label for="">project Details</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="projectDetails"
+              />
+            </div>
+            <div class="col-6">
+              <label for="Select Client">Select Client</label>
+              <select formControlName="clientId" class="form-control">
+                <option value="">select client</option>
+                @for(client of clientList; track $index){
+                <option [value]="client.clientId">
+                  {{ client.contactPersonName }}
+                </option>
+                }
+              </select>
+            </div>
+
+            <div class="col-6">
+              <label for="Lead By">Lead By</label>
+              <select formControlName="leadByEmpId" class="form-control">
+                <option value="">select employ</option>
+                @for(employ of employeeList; track $index ){
+                <option [value]="employ.empId">
+                  {{ employ.empName }} - {{ employ.empCode }}
+                </option>
+                }
+              </select>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-6 text-center">
+                <button class="btn btn-secondary" (click)="onClean()">
+                  Reset
+                </button>
+              </div>
+              <div class="col-6 text-center">
+                <button
+                  class="btn btn-success"
+                  [disabled]="projectForm.invalid"
+                  (click)="onSaveProject()"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
