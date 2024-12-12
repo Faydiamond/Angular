@@ -21,7 +21,7 @@ ng build
 ```
 
 ## CONSIDERATION
-- you should installed node in you laptop
+- you should installed node in your laptop
 - this project runs on the port 4209
 - http://localhost:4209
 
