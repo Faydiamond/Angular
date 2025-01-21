@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8">
+      <h1>{{ thor.name | titlecase }}</h1>
+      <dl>
+        <td>Nombre:</td>
+        <dd>{{ thor.name }}</dd>
+        <td>Edad:</td>
+        <dd>{{ thor.age }}</dd>
+        <td>Metodo:</td>
+        <dd>{{ getHeroDescription() }}</dd>
+        <td>Capitalizado:</td>
+        <dd>{{ thor.name | titlecase }}</dd>
+      </dl>
+
+      <button
+        class="btn btn-primary"
+        (click)="changeHeroDescription()"
+        *ngIf="showButton"
+      >
+        Cambiar nombre
+      </button>
+    </div>
+  </div>
+</div>
