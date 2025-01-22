@@ -1,0 +1,22 @@
+<form action="" class="row" (ngSubmit)="emiCharacter()">
+  <h3>Crear personaje</h3>
+  <input
+    type="text"
+    placeholder="nombre del personaje"
+    class="form-control mb-2"
+    [(ngModel)]="character.name"
+    name="name"
+  />
+  <input
+    type="number"
+    min="10"
+    max="100000"
+    placeholder="poder"
+    class="form-control mb-2"
+    [(ngModel)]="character.power"
+    name="power"
+  />
+
+  <button class="btn btn-primary form-control">Crear</button>
+  <!--<pre>{{ character | json }}</pre>-->
+</form>
